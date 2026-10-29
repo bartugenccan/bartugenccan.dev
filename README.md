@@ -3,7 +3,7 @@
 Kişisel site. Vite + React + TypeScript, build sırasında statik HTML'e prerender edilir.
 
 ```
-bartugenccan.dev        → bu site          (Cloudflare Pages)
+bartugenccan.dev        → bu site          (Cloudflare Workers, static assets)
 blog.bartugenccan.dev   → yazılar          (Hashnode)
 ```
 
@@ -24,7 +24,7 @@ blog.bartugenccan.dev   → yazılar          (Hashnode)
 ```
 npm install
 npm run dev        # geliştirme sunucusu (prerender yok)
-npm run build      # dist/ — Cloudflare Pages bunu yayınlar
+npm run build      # dist/: Cloudflare bunu yayınlar
 npm run preview    # dist/'i yerelde sun
 
 cd video && npm install
@@ -71,8 +71,12 @@ go-crawler'daki semaphore hatasını gösterir. "Havalı görünsün" diye anima
 
 ## Yayın
 
-Cloudflare Pages → GitHub repo'ya bağla → her push'ta otomatik deploy.
-Build komutu `npm run build`, çıktı klasörü `dist`. Node 20+.
+Cloudflare Workers (Workers Builds) → GitHub repo'ya bağlı → her push'ta otomatik deploy.
+Deploy komutu `npx wrangler deploy`. `wrangler.jsonc` build'i (`npm run build`)
+kendisi çalıştırır ve `dist/`'i statik asset olarak yayınlar; dashboard'da ayrı
+build komutu gerekmez. Bu dosyayı silme: yoksa wrangler projeyi kendi kendine
+yapılandırır, Vite'a Cloudflare plugin'i ekler ve prerender adımı kırılır.
+Yerelde Cloudflare runtime'ı ile denemek için: `npx wrangler dev`.
 Custom domain: `bartugenccan.dev`. SSL otomatik.
 
 Hashnode ayrı: `blog.bartugenccan.dev` için CNAME kaydı Porkbun DNS'ine eklenecek.

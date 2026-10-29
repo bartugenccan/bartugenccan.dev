@@ -1,0 +1,14 @@
+// Static site served as a Workers assets-only deployment. Having this file
+// stops `wrangler deploy` from auto-configuring the project (which injects
+// @cloudflare/vite-plugin and breaks the SSR prerender step).
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "bartugenccan-dev",
+  "compatibility_date": "2026-10-23",
+  "build": {
+    "command": "npm run build"
+  },
+  "assets": {
+    "directory": "./dist"
+  }
+}

@@ -37,7 +37,7 @@ skorlarını söyle. Tarayıcıda kontrol etmemi istediğin bir şey varsa yaz.
 
 ## Sonra
 
-1. Cloudflare Pages'e bağla (GitHub repo → otomatik deploy). Build: `npm run build`, çıktı: `dist`
+1. Cloudflare Workers'a bağlı (GitHub repo → otomatik deploy). Deploy komutu `npx wrangler deploy`; build'i `wrangler.jsonc` çalıştırır
 2. Custom domain: `bartugenccan.dev`
 3. Hashnode için Porkbun DNS'ine CNAME: `blog` → Hashnode'un verdiği adres
 4. **Now** bölümünü haftada bir güncelle (`CONTENT.md` + `src/content.ts`)
