@@ -1,37 +1,35 @@
 import type { Page } from '../pages'
+import { SECTION } from './SectionHeading'
 
 export function Nav({ page }: { page: Page }) {
-  // On /projects/ the section anchors live on the home page.
+  // On /projects/ the Experience anchor lives on the home page.
   const base = page === 'home' ? '' : '/'
   const items = [
-    { label: 'Now', href: `${base}#now` },
-    { label: 'Projects', href: '/projects/', current: page === 'projects' },
-    { label: 'Experience', href: `${base}#experience` },
-    { label: 'Contact', href: '#contact' },
+    { n: SECTION.projects, label: 'Projects', href: '/projects/', current: page === 'projects' },
+    { n: SECTION.experience, label: 'Experience', href: `${base}#experience` },
+    { n: SECTION.contact, label: 'Contact', href: '#contact' },
   ]
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-bg/75 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-line bg-bg/85 backdrop-blur-md">
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 md:px-8"
+        className="mono mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 text-[13px] md:px-8"
       >
-        <a
-          href="/"
-          className="hidden font-mono text-[13px] tracking-tight text-fg min-[440px]:inline"
-        >
-          bartugenccan<span className="text-accent">.dev</span>
+        <a href="/" className="sel hidden text-fg min-[440px]:inline">
+          bartugenccan<span className="text-muted">.dev</span>
         </a>
-        <ul className="flex items-center gap-4 text-[13px] sm:gap-6 sm:text-sm">
+        <ul className="flex items-center gap-5 sm:gap-7">
           {items.map((item) => (
             <li key={item.label}>
               <a
                 href={item.href}
                 aria-current={item.current ? 'page' : undefined}
-                className={`hover-line py-1 transition-colors ${
-                  item.current ? 'text-accent' : 'text-muted hover:text-fg'
-                }`}
+                className={`sel group py-0.5 ${item.current ? 'text-accent' : 'text-fg'}`}
               >
+                <span className="hidden text-muted group-hover:text-bg sm:inline" aria-hidden="true">
+                  {item.n}{' '}
+                </span>
                 {item.label}
               </a>
             </li>

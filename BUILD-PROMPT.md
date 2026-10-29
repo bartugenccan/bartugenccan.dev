@@ -23,11 +23,12 @@ Kısıtlar README.md'de. Özellikle:
 - Em-dash yok, emoji yok.
 
 Hedef kitle systems/infrastructure mühendisleri ve bu alanda işe alım
-yapan kişiler. Tasarım kararlarını "bir SRE bunu açtığında ciddiye alır mı"
-sorusuna göre ver.
+yapan kişiler. Görsel referans bir alet, film değil: htop, Wireshark,
+osiloskop, devre şeması, man page. Tasarım kararlarını "bir SRE bunu
+açtığında güzel tasarlanmış bir araç gibi mi duruyor" sorusuna göre ver.
 
-PROJECTS'te "what broke" maddeleri sitenin en değerli içeriği. Onları
-gömme, okunaklı ve ferah bırak.
+PROJECTS'teki "What it taught me" maddeleri (ne oldu + ne öğretti) sitenin
+en değerli içeriği. Onları gömme, okunaklı ve ferah bırak.
 
 Bitirince: npm run build çalıştır, gzip boyutlarını ve Lighthouse
 skorlarını söyle. Tarayıcıda kontrol etmemi istediğin bir şey varsa yaz.
@@ -40,5 +41,4 @@ skorlarını söyle. Tarayıcıda kontrol etmemi istediğin bir şey varsa yaz.
 1. Cloudflare Workers'a bağlı (GitHub repo → otomatik deploy). Deploy komutu `npx wrangler deploy`; build'i `wrangler.jsonc` çalıştırır
 2. Custom domain: `bartugenccan.dev`
 3. Hashnode için Porkbun DNS'ine CNAME: `blog` → Hashnode'un verdiği adres
-4. **Now** bölümünü haftada bir güncelle (`CONTENT.md` + `src/content.ts`)
-5. İlk yazı yayınlanınca **Writing** bölümünü aç
+4. İlk yazı yayınlanınca **Writing** bölümünü aç

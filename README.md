@@ -39,15 +39,26 @@ Render edilmiş video dosyaları repoya commit'lenir; Cloudflare build'i Remotio
 ## Hedef kitle: her karar bunun için
 
 Systems / infrastructure mühendisleri ve bu alanda işe alım yapan kişiler.
-Görsel dil koyu, teknolojik, systems temalı. Ama hareket her zaman bir şey
-anlatır: hero'daki grafik süreçleri ve bozulan bir bağlantıyı, video
-go-crawler'daki semaphore hatasını gösterir. "Havalı görünsün" diye animasyon yok.
+Görsel dil bir **alet**, film değil: htop, Wireshark paket listesi, osiloskop
+ekranı, devre şeması, man page. Ölçüt: bir SRE sayfayı açtığında "güzel
+tasarlanmış bir araç" hissi almalı, "tema paketi" hissi değil.
+
+- Mono yapısaldır: tarih, etiket, sayı, bölüm numarası, repo yolu mono ve
+  `tabular-nums`. Gövde metni sans.
+- Bölümler numaralı: `01 / Projects`, `02 / Experience`, `03 / Contact`.
+- Yapıyı kutu ve gölge değil, 1px hairline çizgiler ve hizalama kurar.
+- Arka planda %3 opaklıkta milimetrik grid; görünmez, sezilir.
+- Hover seçim gibidir: arka plan ve metin rengi yer değiştirir; transform ve gölge yok.
+- Sayfa altındaki metadata (commit, tarih) build'den gelir, elle yazılmaz.
+
+Hareket her zaman bir şey anlatır: hero'daki grafik süreçleri ve bozulan bir
+bağlantıyı, video go-crawler'daki semaphore hatasını gösterir.
 
 ---
 
 ## Teknik kısıtlar
 
-- **İki sayfa:** `/` (Hero, Now, Projects özeti, Experience, Contact) ve `/projects/`.
+- **İki sayfa:** `/` (Hero, Projects özeti, Experience, Contact) ve `/projects/`.
 - **İçerik JS'siz okunabilir.** Her sayfa build'de prerender edilir; JS sadece
   canvas'ı, video oynatmayı ve scroll reveal'ı ekler.
 - **Bütçe (gzip):** ilk JS ≤ 90 KB, three.js chunk'ı lazy ve ≤ 150 KB, video ≤ 1.5 MB.
@@ -64,7 +75,12 @@ go-crawler'daki semaphore hatasını gösterir. "Havalı görünsün" diye anima
 - `window.addEventListener('scroll')`: IntersectionObserver kullan
 - "Hi 👋 I'm ..." başlığı, emoji
 - Skill bar / yüzdeli yetenek göstergesi, "tech stack" logo ızgarası
-- Gradient metin, neon glow, mor "AI" gradyanları
+- Neon pembe, mor, cyan; gradyan metin; glow ve bloom
+- Glitch efekti, text scramble, yazı makinesi animasyonu
+- Matrix yağmuru, dekoratif Japonca karakter, rastgele hex/binary dolgu
+- Orbitron, Audiowide gibi "cyber" fontlar
+- CRT scanline overlay
+- Uydurma metadata (sahte sürüm, sahte "last sync")
 - Em-dash (`—`). Virgül, iki nokta veya nokta kullan
 
 ---
@@ -83,8 +99,7 @@ Hashnode ayrı: `blog.bartugenccan.dev` için CNAME kaydı Porkbun DNS'ine eklen
 
 ## Bakım
 
-**Now** bölümü haftada bir güncellenir: önce `CONTENT.md`, sonra `src/content.ts`
-(`now.week` meter'ı da sürer). Eskimiş bir "Now", hiç olmamasından kötüdür.
-`systems-path/now.sh` hafta ve fazı hesaplıyor.
+Metin değişikliği önce `CONTENT.md`'ye, sonra aynen `src/content.ts`'e yapılır.
+Yeni proje bittikçe `/projects/`'e eklenir; her madde "ne oldu" + "ne öğretti".
 
 İlk yazı yayınlanınca `src/pages/Home.tsx`'teki Writing yorumunu bölüme çevir ve nav'a ekle.

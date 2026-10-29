@@ -18,6 +18,12 @@
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
+/* Metadata is set in mono with tabular figures so numbers line up in columns. */
+@utility mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
 @layer base {
   html {
     background: var(--color-bg);
@@ -39,21 +45,17 @@
     color: var(--color-bg);
   }
 
-  a:focus-visible,
-  button:focus-visible,
-  video:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 3px;
-    border-radius: 2px;
+  :focus-visible {
+    outline: 1px solid var(--color-accent);
+    outline-offset: 2px;
   }
 
   code {
     font-family: var(--font-mono);
-    font-size: 0.9em;
-    padding: 0.1em 0.35em;
-    border-radius: 4px;
+    font-size: 0.88em;
+    padding: 0.05em 0.3em;
+    border-radius: 2px;
     background: var(--color-raised);
-    border: 1px solid var(--color-line);
   }
 }
 
@@ -63,25 +65,82 @@
   }
 }
 
-/* Film grain + scanlines. Fixed and non-interactive so it never repaints on scroll. */
-.grain {
+/* Graph paper: a 24px grid at 3% white. Fixed and non-interactive, so it
+   never repaints on scroll. Sensed rather than seen. */
+.paper {
   position: fixed;
   inset: 0;
-  z-index: 50;
+  z-index: -1;
   pointer-events: none;
-  opacity: 0.05;
   background-image:
-    repeating-linear-gradient(0deg, rgb(255 255 255 / 0.5) 0 1px, transparent 1px 3px),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode: overlay;
+    linear-gradient(to right, rgb(255 255 255 / 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-/* Press feedback for anything clickable that looks like a button. */
-.press {
-  transition: transform 160ms var(--ease-out-strong), background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+/* Hover reads as a selection, like a terminal cursor: background and text
+   swap. No transform, no shadow. */
+.sel {
+  border-radius: 1px;
+  padding-inline: 0.2em;
+  margin-inline: -0.2em;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
 }
-.press:active {
-  transform: scale(0.97);
+.sel:focus-visible {
+  outline: none;
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+@media (hover: hover) and (pointer: fine) {
+  .sel:hover {
+    background: var(--color-accent);
+    color: var(--color-bg);
+  }
+}
+
+/* Buttons follow the same rule: hover inverts the fill. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--color-line);
+  border-radius: 2px;
+  padding: 0.6rem 1.1rem;
+  color: var(--color-fg);
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    border-color 120ms ease;
+}
+.btn-primary {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-bg);
+}
+.btn:focus-visible {
+  outline: none;
+  background: var(--color-fg);
+  border-color: var(--color-fg);
+  color: var(--color-bg);
+}
+.btn-primary:focus-visible {
+  background: transparent;
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    background: var(--color-fg);
+    border-color: var(--color-fg);
+    color: var(--color-bg);
+  }
+  .btn-primary:hover {
+    background: transparent;
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
 }
 
 /* Hero entrance: pure CSS so it runs before hydration and without JS. */
@@ -117,58 +176,4 @@
 .js [data-reveal][data-in] {
   opacity: 1;
   transform: none;
-}
-
-/* Now meter: lit ticks switch on in sequence once the panel is in view. */
-.tick-lit {
-  transform-origin: bottom;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .js .tick-lit {
-    opacity: 0.2;
-    transform: scaleY(0.35);
-    transition:
-      opacity 300ms ease,
-      transform 500ms var(--ease-out-strong);
-    transition-delay: calc(var(--i, 0) * 90ms + 250ms);
-  }
-  .js [data-in] .tick-lit {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-/* Live indicator: the only perpetual motion on the page, and it means "updated weekly". */
-@media (prefers-reduced-motion: no-preference) {
-  .pulse::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: inherit;
-    animation: pulse 2.4s var(--ease-out-strong) infinite;
-  }
-}
-@keyframes pulse {
-  from {
-    opacity: 0.7;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(3);
-  }
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .hover-line {
-    background-image: linear-gradient(currentColor, currentColor);
-    background-size: 0% 1px;
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-    transition: background-size 300ms var(--ease-out-strong), color 200ms ease;
-  }
-  .hover-line:hover {
-    background-size: 100% 1px;
-  }
 }

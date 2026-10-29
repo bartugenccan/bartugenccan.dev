@@ -27,7 +27,7 @@ export function LoopVideo({ label, className = '' }: { label: string; className?
     <video
       ref={ref}
       aria-label={label}
-      className={`aspect-video w-full rounded-md border border-line bg-surface object-cover ${className}`}
+      className={`aspect-video w-full rounded-[2px] border border-line bg-bg object-cover ${className}`}
       poster="/media/semaphore-poster.jpg"
       controls={!enhanced}
       muted
