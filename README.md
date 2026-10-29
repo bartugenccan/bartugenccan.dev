@@ -1,6 +1,6 @@
 # bartugenccan.dev
 
-Kişisel site. Statik HTML + CSS, build step yok.
+Kişisel site. Vite + React + TypeScript, build sırasında statik HTML'e prerender edilir.
 
 ```
 bartugenccan.dev        → bu site          (Cloudflare Pages)
@@ -11,60 +11,76 @@ blog.bartugenccan.dev   → yazılar          (Hashnode)
 
 | Dosya | Ne |
 |---|---|
-| `CONTENT.md` | Bütün metin. Site bundan beslenir, başka yerden içerik arama |
-| `BUILD-PROMPT.md` | Siteyi kurduracak hazır prompt |
-| `index.html` | Üretilecek |
-| `style.css` | Üretilecek |
+| `CONTENT.md` | Bütün metnin kaynağı. Site metni buradan gelir, başka yerden içerik arama |
+| `src/content.ts` | `CONTENT.md`'nin koddaki birebir kopyası. İkisi birlikte güncellenir |
+| `src/pages/` | `Home` (`/`) ve `Projects` (`/projects/`) |
+| `src/components/` | Bölümler. `ProcessGraph` three.js hero, `LoopVideo` Remotion videosu |
+| `scripts/prerender.mjs` | Build sonrası iki sayfanın HTML'ini sunucu tarafında üretir |
+| `video/` | Remotion projesi. `SemaphoreLoop` videosunu `public/media/`'ya render eder |
+| `BUILD-PROMPT.md` | Siteyi baştan kurduracak hazır prompt |
+
+## Komutlar
+
+```
+npm install
+npm run dev        # geliştirme sunucusu (prerender yok)
+npm run build      # dist/ — Cloudflare Pages bunu yayınlar
+npm run preview    # dist/'i yerelde sun
+
+cd video && npm install
+npm run studio     # Remotion Studio'da videoyu düzenle
+npm run render     # public/media/semaphore-loop.{mp4,webm} + poster.jpg
+```
+
+Render edilmiş video dosyaları repoya commit'lenir; Cloudflare build'i Remotion çalıştırmaz.
 
 ---
 
-## Hedef kitle — her karar bunun için
+## Hedef kitle: her karar bunun için
 
 Systems / infrastructure mühendisleri ve bu alanda işe alım yapan kişiler.
-Site bir **ilk izlenim**, portfolyo gösterisi değil.
-
-Referans: **ahmet.dev**. İsim, iş geçmişi, yazı listesi, projeler. Düz, hızlı, metin.
-Sektörün tanıdığı bir isim ve sitesi 100 satır. Model bu.
+Görsel dil koyu, teknolojik, systems temalı. Ama hareket her zaman bir şey
+anlatır: hero'daki grafik süreçleri ve bozulan bir bağlantıyı, video
+go-crawler'daki semaphore hatasını gösterir. "Havalı görünsün" diye animasyon yok.
 
 ---
 
-## Teknik kısıtlar — pazarlık yok
+## Teknik kısıtlar
 
-- **Tek sayfa.** Bölümler arası anchor. Çok sayfaya bölme.
-- **Framework yok.** React, Next, Tailwind, Astro — hiçbiri. Düz HTML + CSS.
-- **Build step yok.** `index.html`'i aç, çalışsın.
-- **JavaScript kapalıyken tam okunabilir olmalı.** JS varsa bile sadece
-  tema geçişi için, başka hiçbir şey için değil.
-- **1 saniyenin altında açılmalı.** Toplam sayfa ağırlığı < 100 KB.
-- **Webfont en fazla 1 tane**, tercihen sıfır — sistem font yığını yeter.
-- **Dark/light** `prefers-color-scheme` ile otomatik. Toggle isteğe bağlı.
-- **Mobilde okunabilir.** 16px yan boşluk, yatay kaydırma yok.
-- Semantik HTML, gerçek `<h1>`/`<h2>`, erişilebilir kontrast.
+- **İki sayfa:** `/` (Hero, Now, Projects özeti, Experience, Contact) ve `/projects/`.
+- **İçerik JS'siz okunabilir.** Her sayfa build'de prerender edilir; JS sadece
+  canvas'ı, video oynatmayı ve scroll reveal'ı ekler.
+- **Bütçe (gzip):** ilk JS ≤ 90 KB, three.js chunk'ı lazy ve ≤ 150 KB, video ≤ 1.5 MB.
+  Lighthouse Performance ≥ 90, Accessibility 100.
+- **Sadece koyu tema.** Tek vurgu rengi `#b8f34a`; kırmızı `#ff5a4e` sadece hata/bozulma anlamında.
+- **Font:** Geist + Geist Mono, self-host (`@fontsource-variable`).
+- **`prefers-reduced-motion`:** canvas tek kare çizer, video poster gösterir, reveal sadece fade.
+- **Mobilde** 16px yan boşluk, yatay kaydırma yok.
+- Semantik HTML: sayfa başına tek `<h1>`, erişilebilir kontrast.
 
 ## Yapma listesi
 
-Bunların hepsi hedef kitleye "bu adam frontend'den geliyor" dedirtir —
-yani tam olarak aşılmaya çalışılan algıyı pekiştirir.
-
-- Hero animasyonu, parallax, gradient arka plan
-- "Hi 👋 I'm ..." başlığı
-- Skill bar / yüzdeli yetenek göstergesi (hiçbir bilgi taşımıyor)
-- "Tech stack" logo ızgarası
-- Scroll-triggered animasyon, fade-in
-- Yüklenme animasyonu / skeleton
-- Emoji (bölüm başlıklarında bile)
-- Terminal taklidi yazı efekti
+- Amaçsız animasyon: parallax, scroll-hijack, yüklenme ekranı, skeleton
+- `window.addEventListener('scroll')`: IntersectionObserver kullan
+- "Hi 👋 I'm ..." başlığı, emoji
+- Skill bar / yüzdeli yetenek göstergesi, "tech stack" logo ızgarası
+- Gradient metin, neon glow, mor "AI" gradyanları
+- Em-dash (`—`). Virgül, iki nokta veya nokta kullan
 
 ---
 
 ## Yayın
 
 Cloudflare Pages → GitHub repo'ya bağla → her push'ta otomatik deploy.
+Build komutu `npm run build`, çıktı klasörü `dist`. Node 20+.
 Custom domain: `bartugenccan.dev`. SSL otomatik.
 
 Hashnode ayrı: `blog.bartugenccan.dev` için CNAME kaydı Porkbun DNS'ine eklenecek.
 
 ## Bakım
 
-`CONTENT.md` → **Now** bölümü haftada bir güncellenir. Eskimiş bir "Now",
-hiç olmamasından kötüdür. `systems-path/now.sh` hafta ve fazı hesaplıyor.
+**Now** bölümü haftada bir güncellenir: önce `CONTENT.md`, sonra `src/content.ts`
+(`now.week` meter'ı da sürer). Eskimiş bir "Now", hiç olmamasından kötüdür.
+`systems-path/now.sh` hafta ve fazı hesaplıyor.
+
+İlk yazı yayınlanınca `src/pages/Home.tsx`'teki Writing yorumunu bölüme çevir ve nav'a ekle.

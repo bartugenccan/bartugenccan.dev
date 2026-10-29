@@ -1,0 +1,20 @@
+{
+  "name": "bartugenccan-dev-video",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts SemaphoreLoop ../public/media/semaphore-loop.webm --codec=vp9 --crf=38 && remotion render src/index.ts SemaphoreLoop ../public/media/semaphore-loop.mp4 --codec=h264 --crf=28 && remotion still src/index.ts SemaphoreLoop ../public/media/semaphore-poster.jpg --frame=150 --image-format=jpeg --jpeg-quality=82"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.539",
+    "@remotion/google-fonts": "^4.0.539",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remotion": "^4.0.539"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}

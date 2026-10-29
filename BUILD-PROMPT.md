@@ -1,52 +1,44 @@
 # Build prompt
 
-Bu klasörde çalışan bir AI'a ver. `README.md` ve `CONTENT.md` zaten yanında.
+Site kurulu. Bu prompt, siteyi baştan kurdurmak veya büyük bir değişiklik
+yaptırmak için bir AI'a verilir. `README.md` ve `CONTENT.md` yanında.
 
 ---
 
 ```
-Bu repo kişisel bir site: bartugenccan.dev. İki dosyayı oku ve siteyi kur:
-README.md (kısıtlar) ve CONTENT.md (bütün metin). İçeriği başka yerden arama,
-uydurma, genişletme — CONTENT.md ne diyorsa o.
+Bu repo kişisel bir site: bartugenccan.dev. Önce README.md (kısıtlar ve
+yapı) ve CONTENT.md (bütün metin) dosyalarını oku. İçeriği başka yerden
+arama, uydurma, genişletme: CONTENT.md ne diyorsa o. Metin kodda
+src/content.ts'te; ikisi birebir aynı kalmalı.
 
-Üreteceğin dosyalar: index.html ve style.css. Başka dosya yok.
+Stack: Vite + React + TypeScript, Tailwind v4, three.js (hero), Remotion
+(video/ klasöründe, sadece offline render). Her sayfa build'de prerender
+edilir; içerik JS kapalıyken de okunur.
 
-Kısıtlar (README.md'de de var, ihlal etme):
-- Tek sayfa, bölümler arası anchor. Framework yok, build step yok.
-- JavaScript kapalıyken tam okunabilir. JS sadece tema toggle için, o da opsiyonel.
-- Toplam ağırlık 100 KB altı, webfont en fazla 1 (tercihen 0, sistem font yığını).
-- Dark/light prefers-color-scheme ile. Her ikisinde de kontrast erişilebilir olsun.
-- Mobilde 16px yan boşluk, yatay kaydırma yok.
-- Semantik HTML: tek h1, bölümler h2, gerçek <section> ve <nav>.
+Kısıtlar README.md'de. Özellikle:
+- Sadece koyu tema, tek vurgu rengi, kırmızı sadece "bozuldu" anlamında.
+- Her animasyonun tek cümlelik bir amacı olsun; prefers-reduced-motion'a uy.
+- Scroll listener yok, sadece transform/opacity animasyonu.
+- Bütçe: ilk JS ≤ 90 KB gz, three.js lazy ≤ 150 KB gz.
+- Em-dash yok, emoji yok.
 
-Yapma: hero animasyonu, parallax, gradient arka plan, "Hi I'm", skill bar,
-tech-stack logo ızgarası, scroll animasyonu, yüklenme ekranı, emoji,
-terminal taklidi efekt.
-
-Hedef kitle systems/infrastructure mühendisleri ve bu alanda işe alım yapan
-kişiler. Referans estetik: ahmet.dev — düz, hızlı, metin. Tasarım kararlarını
-"bir SRE bunu açtığında ciddiye alır mı" sorusuna göre ver.
-
-Bölüm sırası: Hero → Now → Projects → Experience → Contact.
-WRITING bölümünü ŞİMDİLİK EKLEME — henüz yayınlanmış yazı yok, boş bir bölüm
-zarar verir. Yorum satırı olarak yerini bırak.
-
-NOW bölümü görsel olarak öne çıksın — sitenin ayırt edici parçası o. Ama
-abartma: hafif bir arka plan farkı veya ince bir kenarlık yeter.
+Hedef kitle systems/infrastructure mühendisleri ve bu alanda işe alım
+yapan kişiler. Tasarım kararlarını "bir SRE bunu açtığında ciddiye alır mı"
+sorusuna göre ver.
 
 PROJECTS'te "what broke" maddeleri sitenin en değerli içeriği. Onları
 gömme, okunaklı ve ferah bırak.
 
-Bitirince: dosya yollarını ve sayfanın toplam ağırlığını söyle. Tarayıcıda
-açıp kontrol etmemi istediğin bir şey varsa onu da yaz.
+Bitirince: npm run build çalıştır, gzip boyutlarını ve Lighthouse
+skorlarını söyle. Tarayıcıda kontrol etmemi istediğin bir şey varsa yaz.
 ```
 
 ---
 
 ## Sonra
 
-1. Cloudflare Pages'e bağla (GitHub repo → otomatik deploy)
+1. Cloudflare Pages'e bağla (GitHub repo → otomatik deploy). Build: `npm run build`, çıktı: `dist`
 2. Custom domain: `bartugenccan.dev`
 3. Hashnode için Porkbun DNS'ine CNAME: `blog` → Hashnode'un verdiği adres
-4. `CONTENT.md` → **Now** bölümünü haftada bir güncelle
+4. **Now** bölümünü haftada bir güncelle (`CONTENT.md` + `src/content.ts`)
 5. İlk yazı yayınlanınca **Writing** bölümünü aç
