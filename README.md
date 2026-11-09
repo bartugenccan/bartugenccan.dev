@@ -38,7 +38,7 @@ Render edilmiş video dosyaları repoya commit'lenir; Cloudflare build'i Remotio
 
 ## Hedef kitle: her karar bunun için
 
-Systems / infrastructure mühendisleri ve bu alanda işe alım yapan kişiler.
+Backend / AI platform mühendisleri ve bu alanda işe alım yapan kişiler.
 Görsel dil bir **alet**, film değil: htop, Wireshark paket listesi, osiloskop
 ekranı, devre şeması, man page. Ölçüt: bir SRE sayfayı açtığında "güzel
 tasarlanmış bir araç" hissi almalı, "tema paketi" hissi değil.

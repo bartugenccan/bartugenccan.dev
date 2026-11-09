@@ -9,9 +9,9 @@ aynı kalır. Ters tırnak (`` ` ``) içindeki ifadeler sitede kod olarak görü
 
 **Bartu Gençcan**
 
-> Backend engineer moving toward systems and infrastructure.
-> Five years shipping production web, mobile and backend. Now going one layer
-> down: operating systems, networking, concurrency.
+> Backend AI engineer.
+> Five years shipping production web, mobile and backend. Now building the
+> layer AI features run on: retrieval, evals, LLM gateways, durable agents.
 
 Linkler: `github.com/bartugenccan` · `linkedin.com/in/bartugenccan` · `x.com/bartugenccandev` · `bartu@bartugenccan.dev`
 
@@ -64,13 +64,19 @@ Yazılar `blog.bartugenccan.dev`'de (Hashnode). Site sadece listeler ve link ver
 
 → `github.com/bartugenccan/go-crawler`
 
-### Sıradakiler: tamamlandıkça eklenecek
+### Now building
+
+Yol haritası `systems-path/ROADMAP.md`. Durum değiştikçe güncellenir. Link
+yok; proje ölçümüyle bitince go-crawler gibi kendi girişini alır.
 
 ```
-Process Monitor        fork/exec/waitpid, zombie prevention, fork-bomb limits
-Go TCP + HTTP server   slow-loris hardening, graceful shutdown
-Worker pool            goroutine leak detection, pprof profiling
-Replicated KV store    replication, conflict resolution, failure injection
+P1  groundtruth   Hybrid RAG + retrieval eval                                  in progress
+P2  judge-gate    LLM-as-judge, human calibration, CI regression gate          next
+P3  llm-gateway   Rate limits, budgets, circuit breaker, fallback, tracing     planned
+P4  casefile      Durable agent: tools, sandbox, budget, replay, human approval planned
+P5  doorman       Prompt-injection defense + red-team harness                  planned
+P6  warmstart     Semantic cache + cost router                                 planned
+P7  slotfill      Distillation + vLLM serving + break-even analysis            planned
 ```
 
 ---
@@ -81,7 +87,7 @@ Her rol: bir satır başlık + madde listesi. Eski roller tek madde.
 
 **Guester** · Backend Developer · 2026 - now
 - Own the multi-provider data ingestion pipeline: six third-party sources aggregated through BullMQ job queues with Redis-backed scheduling, retry policy and failure handling.
-- Designed and maintain around 30 NestJS domain modules (scraper, CRM, auth, dashboard, audit, hotel operations, email automation, analytics) with role-based access guards and request-level audit logging.
+- Designed and maintain around 30 NestJS domain modules (scraper, CRM, auth, dashboard, audit, hotel operations, email automation, analytics, AI) with role-based access guards and request-level audit logging.
 - Built scheduled task orchestration for recurring data collection, notification dispatch and report generation.
 - Operate the MySQL schema and query layer; Redis for both caching and queue state.
 

@@ -1,5 +1,6 @@
 import { goCrawler } from '../content'
 import { order } from '../lib'
+import { Building } from './Building'
 import { LoopVideo } from './LoopVideo'
 import { SECTION, SectionHeading } from './SectionHeading'
 
@@ -32,6 +33,8 @@ export function ProjectTeaser() {
             </a>
           </div>
         </div>
+
+        <Building />
       </div>
     </section>
   )

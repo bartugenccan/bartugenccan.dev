@@ -10,8 +10,8 @@ export const links = {
 
 export const hero = {
   name: 'Bartu Gençcan',
-  tagline: 'Backend engineer moving toward systems and infrastructure.',
-  sub: 'Five years shipping production web, mobile and backend. Now going one layer down: operating systems, networking, concurrency.',
+  tagline: 'Backend AI engineer.',
+  sub: 'Five years shipping production web, mobile and backend. Now building the layer AI features run on: retrieval, evals, LLM gateways, durable agents.',
 }
 
 export type Broke = { what: string; lesson: string }
@@ -47,7 +47,7 @@ export const experience: Job[] = [
     dates: '2026 - now',
     bullets: [
       'Own the multi-provider data ingestion pipeline: six third-party sources aggregated through BullMQ job queues with Redis-backed scheduling, retry policy and failure handling.',
-      'Designed and maintain around 30 NestJS domain modules (scraper, CRM, auth, dashboard, audit, hotel operations, email automation, analytics) with role-based access guards and request-level audit logging.',
+      'Designed and maintain around 30 NestJS domain modules (scraper, CRM, auth, dashboard, audit, hotel operations, email automation, analytics, AI) with role-based access guards and request-level audit logging.',
       'Built scheduled task orchestration for recurring data collection, notification dispatch and report generation.',
       'Operate the MySQL schema and query layer; Redis for both caching and queue state.',
     ],
@@ -105,8 +105,17 @@ export const experience: Job[] = [
   },
 ]
 
-// Upcoming projects (CONTENT.md "Sıradakiler"): add to /projects/ as each one ships.
-//   Process Monitor        fork/exec/waitpid, zombie prevention, fork-bomb limits
-//   Go TCP + HTTP server   slow-loris hardening, graceful shutdown
-//   Worker pool            goroutine leak detection, pprof profiling
-//   Replicated KV store    replication, conflict resolution, failure injection
+// CONTENT.md "Now building". Update status as each project moves; when one ships
+// with a measurement, give it its own entry on /projects/ like go-crawler.
+export type BuildStatus = 'in progress' | 'next' | 'planned'
+export type Build = { id: string; name: string; what: string; status: BuildStatus }
+
+export const building: Build[] = [
+  { id: 'P1', name: 'groundtruth', what: 'Hybrid RAG + retrieval eval', status: 'in progress' },
+  { id: 'P2', name: 'judge-gate', what: 'LLM-as-judge, human calibration, CI regression gate', status: 'next' },
+  { id: 'P3', name: 'llm-gateway', what: 'Rate limits, budgets, circuit breaker, fallback, tracing', status: 'planned' },
+  { id: 'P4', name: 'casefile', what: 'Durable agent: tools, sandbox, budget, replay, human approval', status: 'planned' },
+  { id: 'P5', name: 'doorman', what: 'Prompt-injection defense + red-team harness', status: 'planned' },
+  { id: 'P6', name: 'warmstart', what: 'Semantic cache + cost router', status: 'planned' },
+  { id: 'P7', name: 'slotfill', what: 'Distillation + vLLM serving + break-even analysis', status: 'planned' },
+]
